@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ozempic Era — Business, Media & Health</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Editorial palette — warm cream + dark + section colours */
+  --cream:        #F5EFE3;
+  --cream-2:      #EFE7D6;
+  --paper:        #FBF7EE;
+  --ink:          #2A1D12;
+  --ink-2:        #4A3826;
+  --muted:        #8B6F47;
+  --rule:         #D9C9AC;
+  --amber:        #B47E2E;
+  --amber-deep:   #8C5C18;
+
+  /* Section accents — preserved from your palette */
+  --business:     #2E7D7D;
+  --media:        #6B4C82;
+  --health:       #3A6B45;
+  --conclusion:   #C0392B;
+  --intro:        #B47E2E;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  font-family:'Inter',-apple-system,sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+  position:relative;
+}
+
+/* paper-grain texture overlay */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16  0 0 0 0 0.11  0 0 0 0 0.07  0 0 0 0.045 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity:.7;mix-blend-mode:multiply;z-index:1;
+}
+
+/* ─── STICKY TAB NAV ─── */
+.nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);
+  border-bottom:3px solid var(--amber);
+  box-shadow:0 2px 12px rgba(42,29,18,.18);
+}
+.nav-inner{
+  max-width:1200px;margin:0 auto;
+  padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:64px;flex-wrap:wrap;gap:14px;
+}
+.brand{
+  font-family:'Fraunces',serif;
+  font-weight:700;font-size:18px;color:var(--cream);
+  letter-spacing:.01em;
+}
+.brand span{color:var(--amber);font-style:italic;font-weight:500}
+.tabs{
+  display:flex;gap:2px;
+  background:rgba(255,255,255,.05);
+  padding:4px;border-radius:6px;
+}
+.tab{
+  font-family:'Inter',sans-serif;
+  font-size:13px;font-weight:600;
+  color:rgba(245,239,227,.7);
+  background:transparent;border:none;cursor:pointer;
+  padding:10px 16px;
+  border-radius:4px;
+  letter-spacing:.04em;text-transform:uppercase;
+  transition:all .25s ease;
+  position:relative;
+  text-decoration:none;
+  display:inline-block;
+}
+.tab:hover{color:var(--cream);background:rgba(255,255,255,.08)}
+.tab.active{color:var(--ink);background:var(--amber)}
+.tab[data-section="introduction"].active{background:var(--intro)}
+.tab[data-section="business"].active{background:var(--business);color:#fff}
+.tab[data-section="media"].active{background:var(--media);color:#fff}
+.tab[data-section="health"].active{background:var(--health);color:#fff}
+.tab[data-section="conclusion"].active{background:var(--conclusion);color:#fff}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;
+  padding:80px 28px 60px;
+  text-align:left;
+  max-width:1200px;margin:0 auto;
+  z-index:2;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--amber-deep);
+  padding-bottom:18px;
+}
+.hero-tag::before{
+  content:"";width:32px;height:1px;background:var(--amber);
+}
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-weight:800;
+  font-size:clamp(48px,8vw,108px);
+  line-height:.95;
+  letter-spacing:-.025em;
+  color:var(--ink);
+  margin-bottom:24px;
+}
+.hero h1 em{
+  font-style:italic;font-weight:500;
+  color:var(--amber-deep);
+  font-feature-settings:"swsh";
+}
+.hero-sub{
+  font-family:'Fraunces',serif;
+  font-size:clamp(18px,2vw,24px);
+  color:var(--ink-2);
+  font-weight:400;
+  max-width:720px;
+  line-height:1.45;
+  font-style:italic;
+}
+.hero-meta{
+  margin-top:40px;
+  display:flex;gap:32px;flex-wrap:wrap;
+  font-size:13px;color:var(--muted);
+  letter-spacing:.05em;text-transform:uppercase;
+  font-weight:500;
+}
+.hero-meta div::before{
+  content:"";display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--amber);
+  margin-right:8px;vertical-align:middle;
+}
+
+/* hero side accent */
+.hero-decor{
+  position:absolute;
+  top:80px;right:28px;
+  width:280px;height:280px;
+  pointer-events:none;
+  opacity:.85;
+}
+
+/* ─── SECTIONS ─── */
+.section{
+  padding:90px 28px 60px;
+  max-width:920px;margin:0 auto;
+  position:relative;z-index:2;
+}
+.section-divider{
+  max-width:920px;margin:0 auto;
+  border-top:1px solid var(--rule);
+  position:relative;z-index:2;
+}
+
+.section-header{
+  margin-bottom:50px;
+  display:flex;align-items:flex-start;gap:24px;
+}
+.section-num{
+  font-family:'Fraunces',serif;
+  font-size:64px;font-weight:300;
+  color:var(--amber);
+  font-style:italic;
+  line-height:1;
+  flex-shrink:0;
+  font-feature-settings:"lnum";
+}
+.section-label{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-weight:700;color:var(--muted);
+  margin-bottom:12px;
+}
+.section-title{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(34px,4.5vw,52px);
+  line-height:1.05;
+  letter-spacing:-.015em;
+  color:var(--ink);
+}
+.section-title em{
+  font-style:italic;font-weight:500;
+}
+
+/* section accent colours */
+#introduction .section-num,
+#introduction .section-title em{color:var(--intro)}
+#business .section-num,
+#business .section-title em{color:var(--business)}
+#media .section-num,
+#media .section-title em{color:var(--media)}
+#health .section-num,
+#health .section-title em{color:var(--health)}
+#conclusion .section-num,
+#conclusion .section-title em{color:var(--conclusion)}
+
+/* ─── PROSE ─── */
+h3{
+  font-family:'Fraunces',serif;
+  font-weight:600;
+  font-size:26px;
+  line-height:1.25;
+  margin:50px 0 18px;
+  color:var(--ink);
+  letter-spacing:-.005em;
+}
+h3::before{
+  content:"";display:inline-block;
+  width:24px;height:2px;
+  background:currentColor;
+  vertical-align:middle;
+  margin-right:14px;
+  margin-bottom:6px;
+  opacity:.4;
+}
+#business h3::before{background:var(--business)}
+#media h3::before{background:var(--media)}
+#health h3::before{background:var(--health)}
+#conclusion h3::before{background:var(--conclusion)}
+#introduction h3::before{background:var(--intro)}
+
+p{margin-bottom:22px}
+.lead{
+  font-family:'Fraunces',serif;
+  font-size:22px;
+  line-height:1.5;
+  color:var(--ink-2);
+  font-weight:400;
+  margin-bottom:30px;
+}
+.lead::first-letter{
+  font-size:72px;
+  font-weight:700;
+  float:left;
+  line-height:.85;
+  margin:6px 12px 0 0;
+  color:var(--amber-deep);
+  font-family:'Fraunces',serif;
+}
+
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+
+/* citations look */
+.cite{
+  color:var(--muted);
+  font-size:.92em;
+  font-style:italic;
+}
+
+/* pull quote */
+.pullquote{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:28px;
+  line-height:1.35;
+  color:var(--ink);
+  border-left:3px solid currentColor;
+  padding:20px 0 20px 32px;
+  margin:40px 0;
+  position:relative;
+}
+#business .pullquote{color:var(--business)}
+#media .pullquote{color:var(--media)}
+#health .pullquote{color:var(--health)}
+#conclusion .pullquote{color:var(--conclusion)}
+#introduction .pullquote{color:var(--intro)}
+
+/* stat callout */
+.stat{
+  display:flex;align-items:baseline;gap:18px;
+  padding:24px 28px;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-left:4px solid var(--amber);
+  margin:30px 0;
+  border-radius:2px;
+}
+.stat-num{
+  font-family:'Fraunces',serif;
+  font-size:54px;font-weight:700;
+  color:var(--amber-deep);line-height:1;
+  letter-spacing:-.02em;
+  flex-shrink:0;
+}
+.stat-text{
+  font-size:15px;color:var(--ink-2);line-height:1.45;
+}
+#business .stat{border-left-color:var(--business)}
+#business .stat-num{color:var(--business)}
+#media .stat{border-left-color:var(--media)}
+#media .stat-num{color:var(--media)}
+#health .stat{border-left-color:var(--health)}
+#health .stat-num{color:var(--health)}
+#conclusion .stat{border-left-color:var(--conclusion)}
+#conclusion .stat-num{color:var(--conclusion)}
+
+/* key questions box */
+.questions{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:32px;
+  margin:40px 0;
+  border-radius:2px;
+  position:relative;
+}
+.questions-label{
+  position:absolute;
+  top:-10px;left:24px;
+  background:var(--cream);
+  padding:0 12px;
+  font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;font-weight:700;
+  color:var(--amber-deep);
+}
+.questions p{
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:18px;
+  line-height:1.5;
+  color:var(--ink-2);
+  margin-bottom:14px;
+}
+.questions p:last-child{margin-bottom:0}
+.questions p::before{
+  content:"?";font-style:normal;font-weight:700;
+  color:var(--amber);margin-right:10px;
+}
+
+/* footer */
+.footer{
+  background:var(--ink);
+  color:var(--cream);
+  padding:50px 28px;
+  margin-top:60px;
+  position:relative;z-index:2;
+  text-align:center;
+}
+.footer-inner{
+  max-width:1200px;margin:0 auto;
+}
+.footer h4{
+  font-family:'Fraunces',serif;
+  font-size:24px;font-weight:600;
+  margin-bottom:12px;
+  color:var(--cream);
+}
+.footer h4 em{color:var(--amber);font-style:italic;font-weight:500}
+.footer p{font-size:13px;color:rgba(245,239,227,.6);margin-bottom:0}
+
+/* references */
+.refs{
+  background:var(--cream-2);
+  padding:50px 28px;
+  position:relative;z-index:2;
+}
+.refs-inner{
+  max-width:920px;margin:0 auto;
+}
+.refs h2{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:28px;
+  margin-bottom:28px;
+  color:var(--ink);
+}
+.refs ul{
+  list-style:none;
+  columns:1;
+  font-size:13px;
+  line-height:1.55;
+  color:var(--ink-2);
+}
+.refs li{
+  margin-bottom:12px;
+  padding-left:18px;
+  text-indent:-18px;
+  break-inside:avoid;
+}
+
+/* fade-in */
+.section{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+.section.visible{opacity:1;transform:none}
+
+/* mobile */
+@media(max-width:768px){
+  body{font-size:16px}
+  .nav-inner{padding:0 16px;min-height:auto;padding:10px 16px}
+  .brand{font-size:14px;width:100%}
+  .tabs{width:100%;overflow-x:auto;flex-wrap:nowrap}
+  .tab{padding:8px 12px;font-size:11px;white-space:nowrap}
+  .hero{padding:60px 20px 40px}
+  .hero-decor{display:none}
+  .section{padding:60px 20px 40px}
+  .section-header{flex-direction:column;gap:8px}
+  .section-num{font-size:48px}
+  .pullquote{font-size:20px;padding-left:20px}
+  .stat{flex-direction:column;align-items:flex-start;padding:20px}
+  .stat-num{font-size:42px}
+  .lead::first-letter{font-size:54px}
+  .questions{padding:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- ──────── STICKY TAB NAV ──────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">The Ozempic Era <span>· a critical resource</span></div>
+    <div class="tabs" id="tabs">
+      <a href="#introduction" class="tab active" data-section="introduction">Introduction</a>
+      <a href="#business" class="tab" data-section="business">Business</a>
+      <a href="#media" class="tab" data-section="media">Media</a>
+      <a href="#health" class="tab" data-section="health">Health</a>
+      <a href="#conclusion" class="tab" data-section="conclusion">Conclusion</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ──────── HERO ──────── -->
+<header class="hero">
+  <div class="hero-tag">Business, Media & Health · A Resource for Young Adults</div>
+  <h1>The Ozempic <em>Era</em></h1>
+  <p class="hero-sub">Behind the headlines, the celebrity endorsements and the TikTok transformations — what GLP-1 weight-loss drugs actually mean for the people taking them, the system selling them, and the public conversation around them.</p>
+  <div class="hero-meta">
+    <div>5-Section Long Read</div>
+    <div>Aimed at Ages 18–35</div>
+    <div>Evidence-Based Critical Analysis</div>
+  </div>
+  <svg class="hero-decor" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="100" cy="100" r="80" fill="none" stroke="#B47E2E" stroke-width="1" opacity=".3"/>
+    <circle cx="100" cy="100" r="60" fill="none" stroke="#B47E2E" stroke-width="1" opacity=".4"/>
+    <circle cx="100" cy="100" r="40" fill="none" stroke="#B47E2E" stroke-width="1" opacity=".5"/>
+    <circle cx="100" cy="100" r="20" fill="#B47E2E" opacity=".7"/>
+  </svg>
+</header>
+
+<!-- ──────── INTRODUCTION ──────── -->
+<section id="introduction" class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div>
+      <div class="section-label">Site Introduction</div>
+      <h1 class="section-title">A cultural phenomenon that <em>deserves serious scrutiny</em></h1>
+    </div>
+  </div>
+
+  <p class="lead">You have almost certainly come across them — on TikTok, in the news, in conversations between friends. Weight-loss injections with names like Ozempic, Wegovy and Mounjaro have become one of the defining health stories of the mid-2020s, reshaping how millions of people think about obesity, medicine and their own bodies.</p>
+
+  <p>An estimated 1.4 million people in the UK are now obtaining these drugs through private routes alone <span class="cite">(Jackson et al., 2026)</span>, and global pharmaceutical revenues from this class of medication are projected to exceed $200 billion by 2030 <span class="cite">(J.P. Morgan, 2026)</span>. By any measure, this is a cultural and medical phenomenon that deserves serious scrutiny.</p>
+
+  <p>But scrutiny is in short supply. Across digital platforms, the dominant narratives about GLP-1 receptor agonists (the drug class that includes semaglutide and tirzepatide) tend to cluster at two extremes: breathless enthusiasm from influencers and celebrity users, or categorical dismissal from those who see a pill-shaped shortcut where lifestyle change should be. Neither extreme is particularly useful — especially not for young adults who are encountering these drugs for the first time through an algorithm rather than a clinic.</p>
+
+  <div class="pullquote">The drugs themselves are not the problem. The ecosystem that has grown up around them often is.</div>
+
+  <p>This website is designed to cut through that noise. We are a team of researchers with backgrounds in medicine and bioscience, and we believe the evidence deserves to be communicated honestly, with all its nuance intact. Our position, developed after reviewing the clinical, economic and media literature, is that GLP-1 drugs carry real and meaningful benefits for people with medically defined obesity — but that the way these drugs are currently being marketed, accessed and discussed poses serious risks to public health, patient safety and health equity.</p>
+
+  <p>This resource is structured across three interconnected sections. The <strong>Business</strong> section examines who profits from the GLP-1 boom and what commercial interests shape access to treatment. The <strong>Media</strong> section investigates how coverage — from tabloids to TikTok — has constructed a cultural narrative that often diverges sharply from clinical reality. The <strong>Health</strong> section evaluates the evidence honestly, including what the trials actually show, what happens when treatment stops, and why these drugs cannot on their own address the structural roots of the UK obesity crisis. A concluding section brings these threads together to consider the ethical questions that remain unanswered.</p>
+
+  <p>Our aim is not to discourage anyone from seeking medical help for obesity. It is to ensure that when young adults engage with GLP-1 drugs — whether as patients, future clinicians, or simply as citizens navigating a complex media environment — they do so with clear eyes and accurate information.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────── BUSINESS ──────── -->
+<section id="business" class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div>
+      <div class="section-label">Section One · Business</div>
+      <h1 class="section-title">Follow the money: the commercial engine behind <em>weight-loss injections</em></h1>
+    </div>
+  </div>
+
+  <p class="lead">There is a useful rule of thumb when a health intervention becomes a cultural moment: follow the money. In the case of GLP-1 weight-loss drugs, the financial trail is both illuminating and troubling.</p>
+
+  <h3>A Market Built on Obesity</h3>
+  <p>To understand the commercial story, it helps to begin with the scale of the problem these drugs are responding to. In England alone, more than one in four adults (26%) were classified as obese in 2022, with a further 38% categorised as overweight <span class="cite">(NHS Digital, 2023)</span>. Obesity is associated with a range of serious conditions including type 2 diabetes, cardiovascular disease and certain cancers, and it costs the NHS an estimated £6.5 billion per year <span class="cite">(GOV.UK, 2025)</span>. These are not abstract statistics — they represent a genuine and growing public health crisis that has resisted decades of largely ineffective policy intervention.</p>
+
+  <div class="stat">
+    <div class="stat-num">$200B+</div>
+    <div class="stat-text">Projected global obesity therapeutics market value by 2030 (J.P. Morgan, 2026). The UK segment alone is forecast to grow from $390M (2023) to $715.1M by 2030 — a 17.7% compound annual growth rate.</div>
+  </div>
+
+  <p>That growth is almost entirely concentrated in two companies: the Danish firm <strong>Novo Nordisk</strong>, which manufactures semaglutide (sold as Ozempic for diabetes and Wegovy for weight loss), and the American company <strong>Eli Lilly</strong>, which produces tirzepatide (Mounjaro). This duopoly structure has profound implications for pricing, access and the long-term sustainability of treatment.</p>
+
+  <h3>The Patent Fortress</h3>
+  <p>The ability of Novo Nordisk and Eli Lilly to maintain dominant market positions and premium pricing is deeply rooted in their strategic management of intellectual property. Analysts have described the protections surrounding these compounds as a <em>'patent fortress'</em> — a layered architecture of patents covering not just the active molecules themselves, but also delivery devices, chemical stabilisation methods and specific dosing protocols <span class="cite">(Drug Patent Watch, 2026)</span>.</p>
+
+  <p>In practical terms for UK patients, generic versions of semaglutide cannot enter the market until at least 2031, and tirzepatide is protected until at least 2032 <span class="cite">(Lottering, 2026)</span>. The consequence is that prices remain entirely dictated by two corporations with no competitive pressure. By 2025, a single month of Mounjaro treatment in the UK's private market cost approximately £330 <span class="cite">(Parmar, 2026)</span>.</p>
+
+  <div class="stat">
+    <div class="stat-num">~13%</div>
+    <div class="stat-text">Of monthly take-home pay on the UK National Living Wage that £330/month Mounjaro represents — for a treatment that, as we will see, must be taken indefinitely to maintain its effects.</div>
+  </div>
+
+  <p>This pricing dynamic sits within what public health scholars call the <em>'commercial determinants of health'</em> — the ways in which market structures and business decisions shape population health outcomes <span class="cite">(The King's Fund, 2025)</span>. When access to a treatment is determined by purchasing power rather than clinical need, existing health inequalities are not just maintained but actively deepened. Deprived communities in England have significantly higher rates of obesity than affluent ones <span class="cite">(GOV.UK, 2025)</span>, yet these are precisely the communities least able to afford private prescriptions.</p>
+
+  <h3>NHS Access: The Gap Between Eligibility and Reality</h3>
+  <p>In response to both fiscal constraints and genuine uncertainty about long-term population-level prescribing, NICE and NHS England have established strict eligibility criteria for GLP-1 treatments. Typically, NHS patients require a body mass index of 40 or higher alongside at least one serious obesity-related comorbidity, and must be referred through specialist weight management services <span class="cite">(NICE, 2023)</span>.</p>
+
+  <div class="stat">
+    <div class="stat-num">3.4M</div>
+    <div class="stat-text">UK adults clinically eligible for NHS GLP-1 treatment — yet the rollout is limited to around 220,000 individuals over the first three years (Jackson et al., 2026). A treatment gap of over three million people.</div>
+  </div>
+
+  <p>In the absence of NHS access, around 1.4 million individuals have turned to private online pharmacies and clinics <span class="cite">(Jackson et al., 2026)</span>, many of which operate with far less rigorous prescribing oversight than a GP or specialist clinic would provide. The commercial expansion of the private market has, in effect, been built on the foundations of NHS rationing.</p>
+
+  <p>This restricted access raises difficult questions. Are the NHS criteria genuinely evidence-based, or do they also reflect Treasury-driven cost containment? And if the latter, is it ethical for a healthcare system to maintain eligibility thresholds that functionally restrict access by class?</p>
+
+  <h3>Innovation with a Cost</h3>
+  <p>There is a legitimate counterargument to the critical framing above. Commercial investment in GLP-1 development has produced a class of treatments that demonstrably works for many people <span class="cite">(Wilding et al., 2021; Jastreboff et al., 2022)</span>. Pharmaceutical profit motive, whatever its ethical complications, has driven the clinical trials, regulatory approval processes and manufacturing scale-up that made these treatments available at all.</p>
+
+  <div class="pullquote">A system in which the development of treatments for a disease disproportionately affecting deprived populations is commercially viable only because wealthier patients pay premium prices is not an equitable healthcare system — it is a market.</div>
+
+  <p>And markets, by definition, do not distribute goods according to need. The business story of GLP-1 drugs is ultimately a story about what happens when healthcare is treated as a commodity, and it is one that public health cannot afford to ignore.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────── MEDIA ──────── -->
+<section id="media" class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div>
+      <div class="section-label">Section Two · Media</div>
+      <h1 class="section-title">Miracle jabs and the infodemic: how GLP-1 drugs became a <em>cultural phenomenon</em></h1>
+    </div>
+  </div>
+
+  <p class="lead">If the business story is about who profits, the media story is about who is influenced — and how. Few health topics in recent years have generated as much coverage, commentary and confusion as GLP-1 weight-loss drugs.</p>
+
+  <h3>From Medical Journal to TikTok Feed</h3>
+  <p>GLP-1 drugs were not always tabloid material. Semaglutide was first approved for type 2 diabetes management in 2017, and for several years its coverage was confined largely to endocrinology literature and specialist press. That changed rapidly around 2022–2023, when celebrity use, supply shortages and social media transformation stories brought these drugs to a mass audience.</p>
+
+  <div class="stat">
+    <div class="stat-num">1.6M</div>
+    <div class="stat-text">Adults in England, Wales and Scotland used GLP-1 weight-loss medications between early 2024 and early 2025 — roughly 3% of the adult population — with a further 3.3 million reporting interest (Jackson et al., 2026).</div>
+  </div>
+
+  <p>Young adults aged 18–35 are a particularly important demographic within this landscape. For many in this age group, the first encounter with GLP-1 drugs comes not through a GP consultation but through a TikTok video, an Instagram advertisement or a celebrity interview <span class="cite">(Marie Claire UK, 2026)</span>. This matters enormously, because the framing provided in those first encounters shapes expectations, decisions and ultimately health behaviours.</p>
+
+  <h3>The "Miracle Jab" Narrative</h3>
+  <p>Early and ongoing mainstream media coverage has been marked by a consistent rhetorical pattern: the <em>'miracle jab'</em> frame. Tabloid headlines and magazine features have emphasised dramatic, rapid weight loss — often illustrated with before-and-after images — and have frequently foregrounded celebrity users as proof of concept. Figures including Elon Musk and Serena Williams have publicly discussed or been associated with GLP-1 use, reinforcing the perception that these are lifestyle-enhancement products for the aspirational consumer rather than treatments for a chronic metabolic disease <span class="cite">(Fick and Satija, 2025)</span>.</p>
+
+  <p>The clinical evidence does support significant weight loss. The STEP 1 trial found that semaglutide-treated adults lost an average of 14.9% of body weight over 68 weeks, compared to 2.4% in the placebo group <span class="cite">(Wilding et al., 2021)</span>. But what the 'miracle jab' coverage routinely omits is the clinical context: trials were conducted in people with BMI ≥30 or BMI ≥27 with comorbidities, weight loss requires concurrent lifestyle modification, and the effects diminish or reverse when treatment stops <span class="cite">(Wilding et al., 2022)</span>. A headline about someone losing three stone rarely mentions that they will regain most of it if they stop the injections.</p>
+
+  <p>There is a further complication around celebrity endorsements. It is often unclear whether public figures are sharing personal experiences organically or whether they are in paid promotional relationships with pharmaceutical companies or affiliated private clinics. When a celebrity endorses a product commercially, disclosure obligations exist; when they share what appears to be a personal health journey, no such obligations apply — even if the effect on audience behaviour is identical.</p>
+
+  <h3>Algorithms, Hashtags and the Infodemic</h3>
+  <p>On TikTok and Instagram, the architecture of the platform itself shapes what health information reaches young audiences. Algorithmic systems prioritise content that generates engagement — shares, comments, emotional reactions — over content that is accurate or clinically balanced. Dramatic transformation stories, striking before-and-after images and emotionally resonant personal narratives consistently outperform evidence-based health communication in this environment <span class="cite">(Fick and Satija, 2025)</span>.</p>
+
+  <div class="pullquote">The result is what scholars call an 'infodemic' — an overabundance of information, accurate and inaccurate alike, that makes it genuinely difficult to identify trustworthy sources.</div>
+
+  <p>The result is that hashtags such as #OzempicJourney and #WegovyResults have generated millions of views, with content frequently focusing on dosage strategies, rapid aesthetic changes and routes to private access rather than clinical indication, risk profiles or long-term considerations <span class="cite">(Fick and Satija, 2025)</span>. This represents a textbook example of an <em>infodemic</em> <span class="cite">(Eysenbach, 2002; World Health Organization, 2025)</span>.</p>
+
+  <p>A question worth sitting with: when an individual shares their personal GLP-1 journey on social media, do they carry any obligation to contextualise that experience within the broader evidence base? Many would argue no — personal testimony is legitimate. But when platform algorithms amplify those individual stories to audiences of hundreds of thousands, and when those stories are often the primary health information young adults receive about a prescription medication, the aggregate effect becomes a public health concern regardless of individual intent.</p>
+
+  <h3>Regulation Playing Catch-Up</h3>
+  <p>In the UK, it is illegal to directly advertise prescription-only medicines to the public. Yet by 2025, advertisements for 'weight loss injections' had become ubiquitous across Google, Instagram, Facebook and TikTok. The advertisements carefully avoided naming specific GLP-1 products but used imagery — injection pens, slim figures, before-and-after compositions — that made their subject unambiguous <span class="cite">(Advertising Standards Authority, 2025)</span>.</p>
+
+  <p>In response, the ASA, in collaboration with the MHRA and the General Pharmaceutical Council, issued enforcement guidance explicitly prohibiting such advertisements. The ASA has also deployed AI-based monitoring systems to identify non-compliant content at scale <span class="cite">(Advertising Standards Authority, 2025; Davis, 2025)</span>. These are meaningful steps, but they represent regulation chasing a problem that had already been widely normalised.</p>
+
+  <p>The enforcement challenge points to a broader structural issue. When NHS eligibility thresholds exclude the majority of people who could clinically benefit, demand does not disappear — it migrates to the private market, where oversight is lighter and advertising pressure is higher. Counterfeit drugs represent perhaps the most acute expression of this risk: enforcement operations in 2025 and 2026 uncovered thousands of illegal and falsified GLP-1 doses circulating in the UK market <span class="cite">(Marsh, 2025; Reuters, 2026)</span>.</p>
+
+  <h3>Documentaries and the Limits of Long-Form Media</h3>
+  <p>Not all media coverage has been superficial. Long-form journalism and documentary filmmaking have produced more nuanced treatments of the GLP-1 story. Works such as <em>The Ozempic Effect: Beyond the Waistline</em> (2026) have contextualised these drugs within debates about obesity stigma, pharmaceutical influence and healthcare equity.</p>
+
+  <p>The challenge is reach: TikTok content routinely reaches tens of millions of people; a documentary on a streaming platform reaches far fewer, and tends to attract audiences already motivated to engage with nuance. The media story of GLP-1 drugs is, ultimately, also a media literacy story — and these are skills that neither formal health education nor algorithmic platforms are currently doing enough to cultivate.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────── HEALTH ──────── -->
+<section id="health" class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div>
+      <div class="section-label">Section Three · Health</div>
+      <h1 class="section-title">The science behind the headlines: <em>what the evidence actually shows</em></h1>
+    </div>
+  </div>
+
+  <p class="lead">It is tempting, given the scale of the commercial and media distortions, to conclude that GLP-1 drugs are simply overhyped. That conclusion would be too simple — and inaccurate. There is robust clinical evidence that these drugs work for the populations they were designed to treat. The problem is the mismatch between what the evidence shows and how these treatments are being used in the real world.</p>
+
+  <h3>How GLP-1 Drugs Work</h3>
+  <p>GLP-1 (glucagon-like peptide-1) receptor agonists mimic the action of a naturally occurring gut hormone that is released after eating. By binding to GLP-1 receptors in the pancreas, brain and gastrointestinal tract, these drugs stimulate insulin secretion, suppress glucagon, slow gastric emptying and signal satiety to the hypothalamus <span class="cite">(Drucker, 2018)</span>. The cumulative effect is a reduction in appetite and caloric intake that is physiologically mediated — not simply a matter of willpower.</p>
+
+  <h3>What the Trials Actually Show — and Who They Involve</h3>
+  <p>The clinical evidence base for GLP-1 drugs is genuinely impressive within its intended population. The STEP 1 trial randomised adults with a BMI of 30 or above (or BMI 27 with at least one weight-related comorbidity) to receive either semaglutide or placebo over 68 weeks.</p>
+
+  <div class="stat">
+    <div class="stat-num">14.9%</div>
+    <div class="stat-text">Average body weight loss in semaglutide-treated adults over 68 weeks, vs. 2.4% in the placebo group (Wilding et al., 2021). Tirzepatide trials report reductions of up to 20% (Jastreboff et al., 2022).</div>
+  </div>
+
+  <p>However, there is a critical dimension to these results that mainstream coverage consistently underplays: <strong>these trials enrolled people with clear medical need.</strong> Trial participants had BMIs placing them in the obese range, often alongside comorbidities such as hypertension or prediabetes. They were monitored by clinical teams, supported with lifestyle counselling, and screened for contraindications.</p>
+
+  <div class="pullquote">Clinical trial results apply to the populations studied under the conditions studied. Generalising those results to younger adults with healthy metabolic profiles seeking aesthetic weight loss is scientifically unjustified.</div>
+
+  <p>This is a fundamental principle of evidence-based medicine that is poorly communicated in public discourse. It is not a minor technicality; it is a matter of <em>health literacy</em> that directly affects the risk-benefit calculation for anyone using these drugs outside the clinical indication. Patients and the public increasingly need the tools to ask not just 'does this drug work?' but 'does it work for people like me, in circumstances like mine, and what is the quality of the evidence?' <span class="cite">(Nutbeam, 2000)</span>.</p>
+
+  <h3>Side Effects: The Full Picture</h3>
+  <p>Like all medications with systemic metabolic effects, GLP-1 drugs carry a meaningful side effect profile. The most common adverse events are gastrointestinal: nausea, vomiting, diarrhoea and constipation. In the STEP 1 trial, approximately 74% of semaglutide recipients reported gastrointestinal side effects, though the majority were transient <span class="cite">(Wilding et al., 2021)</span>. More serious but rarer adverse effects include pancreatitis and gallbladder disease <span class="cite">(MHRA, 2024)</span>.</p>
+
+  <p>For patients receiving treatment through NHS specialist services or responsible private practitioners, these risks are managed through gradual dose escalation and clinical monitoring. The same cannot be said for the growing proportion of users accessing GLP-1 drugs through online pharmacies with limited oversight, or through counterfeit supply chains. The drugs themselves are not inherently more dangerous in these contexts, but the conditions of use are.</p>
+
+  <h3>What Happens When You Stop: The Weight Regain Problem</h3>
+  <p>The clinical reality of GLP-1 drug cessation is one of the most important and least publicised aspects of this treatment class. The STEP 1 trial extension followed participants for one year after medication was discontinued and found that they regained <strong>approximately two-thirds</strong> of the weight they had lost <span class="cite">(Wilding et al., 2022)</span>.</p>
+
+  <div class="stat">
+    <div class="stat-num">~£4,000</div>
+    <div class="stat-text">Annual cost of indefinite private Mounjaro treatment (£330/month) — because to maintain effects, GLP-1 drugs must be taken potentially for decades.</div>
+  </div>
+
+  <p>For many of the 3.3 million people who have expressed interest in GLP-1 treatment, the prospect of indefinite pharmaceutical dependency to maintain a health improvement they have already achieved may not be what they signed up for. The informed consent implications are significant.</p>
+
+  <h3>The Surge in Young Adult Prescribing: A Warning Sign</h3>
+
+  <div class="stat">
+    <div class="stat-num">600%</div>
+    <div class="stat-text">Increase in GLP-1 prescriptions for adolescents and young adults in the United States between 2020 and 2023 (Lee et al., 2024). UK trends suggest a comparable trajectory.</div>
+  </div>
+
+  <p>Young adults exposed to GLP-1 narratives primarily through social media are at particular risk of approaching these drugs as a short-term aesthetic intervention rather than a long-term medical treatment. There is also a specific concern about the interaction between GLP-1 use and disordered eating: the appetite suppression these drugs produce is clinically useful in obesity management, but in individuals with existing or subclinical eating disorders, the same pharmacological mechanism could mask or exacerbate harmful patterns.</p>
+
+  <h3>The Structural Reality: Drugs Cannot Fix Obesogenic Environments</h3>
+  <p>Perhaps the most important health critique of the current GLP-1 landscape is the one that is hardest to monetise: these drugs, however effective at the individual level, cannot address the population-level conditions that drive obesity in the first place.</p>
+
+  <p>Public health evidence is clear that obesity is profoundly shaped by structural factors: the concentration of ultra-processed food retail in deprived communities, the design of built environments that discourage physical activity, working conditions that leave insufficient time for food preparation, advertising systems that disproportionately target children with high-calorie products, and economic inequality that makes healthy living materially difficult <span class="cite">(Nesta, 2026)</span>.</p>
+
+  <div class="pullquote">When individuals stop GLP-1 treatment and return to the same communities and environments they came from, they return to the same structural pressures that contributed to their weight gain.</div>
+
+  <p>If policy attention and healthcare investment are redirected towards pharmaceutical solutions at the expense of preventative legislation, food environment reform and economic inequality interventions, the GLP-1 boom will have made the population health picture worse in the long run, not better. The result is a classic Matthew effect in healthcare: those with the greatest need receive the least support, while those with sufficient resources are over-medicating <span class="cite">(The King's Fund, 2025)</span>. GLP-1 drugs do not create this inequality — but in their current form, they deepen it.</p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────── CONCLUSION ──────── -->
+<section id="conclusion" class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div>
+      <div class="section-label">Conclusion</div>
+      <h1 class="section-title">Innovation, equity and the <em>ethics of the GLP-1 boom</em></h1>
+    </div>
+  </div>
+
+  <p class="lead">The three sections of this resource have traced a connected story. Commercially, GLP-1 drugs have generated a market dominated by two corporations exploiting patent protections to maintain premium pricing. In media, these drugs have been culturally constructed in ways that systematically misrepresent the evidence and inflate demand outside clinical indications. In terms of health, the drugs work for the populations they were designed to treat, but those clinical results are being generalised without evidentiary justification.</p>
+
+  <p>These are not separate problems. They are manifestations of the same underlying dynamic: a profit-driven pharmaceutical and media ecosystem that benefits from widespread GLP-1 use regardless of whether that use is clinically appropriate, equitably distributed or accompanied by the structural interventions that genuine population health improvement requires.</p>
+
+  <div class="questions">
+    <div class="questions-label">Ethical Questions That Remain</div>
+    <p>Is it acceptable for treatment access to depend on an individual's ability to pay £330 per month, when the communities with the highest obesity prevalence also have the lowest incomes</p>
+    <p>Can media enthusiasm for these drugs coexist with responsible risk communication, or does the commercial logic of digital platforms structurally preclude it</p>
+    <p>Does the widespread cultural adoption of GLP-1 drugs reduce the stigma historically attached to obesity, or does it create a new form of pressure in which bodies that do not conform to social ideals are expected to be medicated into compliance</p>
+  </div>
+
+  <p>We do not claim to have definitive answers to these questions. But we believe they are the right questions to be asking, and that they are asked too rarely in a public conversation dominated by before-and-after photographs and revenue projections.</p>
+
+  <div class="pullquote">GLP-1 receptor agonists represent a genuine scientific advance that, used appropriately, can meaningfully improve lives. But appropriateness requires clinical oversight, evidence-based eligibility, honest communication about lifelong treatment, and a media and regulatory environment capable of resisting commercial pressure.</div>
+
+  <p>The Ozempic era has arrived. The question is whether the systems around it — clinical, commercial, regulatory, communicative — are adequate to ensure it delivers benefit rather than extracting profit. The evidence reviewed here suggests significant work remains to be done.</p>
+</section>
+
+<!-- ──────── REFERENCES ──────── -->
+<section class="refs">
+  <div class="refs-inner">
+    <h2>References</h2>
+    <ul>
+      <li>Advertising Standards Authority (2025) <em>Advertising guidance: weight loss injection services</em>. London: ASA.</li>
+      <li>Davis, R. (2025) 'Crackdown on weight-loss injection adverts', <em>The Guardian</em>, 14 March.</li>
+      <li>Drug Patent Watch (2026) <em>Patent landscape report: semaglutide and tirzepatide</em>.</li>
+      <li>Drucker, D.J. (2018) 'Mechanisms of action and therapeutic application of glucagon-like peptide-1', <em>Cell Metabolism</em>, 27(4), pp. 740–756.</li>
+      <li>Eysenbach, G. (2002) 'Infodemiology: the epidemiology of (mis)information', <em>The American Journal of Medicine</em>, 113(9), pp. 763–765.</li>
+      <li>Fick, A. and Satija, A. (2025) 'How social media is shaping the weight-loss drug market', <em>Reuters Health</em>, 22 July.</li>
+      <li>GOV.UK (2025) <em>Adult obesity statistics and health inequalities briefing</em>. London: OHID.</li>
+      <li>Grand View Research (2026) <em>UK GLP-1 receptor agonist market analysis and forecast, 2023–2030</em>.</li>
+      <li>Jackson, C. et al. (2026) 'Prevalence and patterns of GLP-1 receptor agonist use', <em>The Lancet</em>, 407(10532), pp. 1214–1226.</li>
+      <li>Jastreboff, A.M. et al. (2022) 'Tirzepatide once weekly for the treatment of obesity', <em>NEJM</em>, 387(3), pp. 205–216.</li>
+      <li>J.P. Morgan (2026) <em>Global obesity drug market outlook 2026</em>.</li>
+      <li>Kantar (2025) <em>Media and medicine: public understanding of weight-loss drugs in the UK</em>.</li>
+      <li>The King's Fund (2025) <em>Commercial determinants of health</em>. London.</li>
+      <li>Lee, C.J. et al. (2024) 'Trends in GLP-1 receptor agonist prescribing among adolescents and young adults', <em>JAMA Pediatrics</em>, 178(4), pp. 341–349.</li>
+      <li>Lottering, C. (2026) 'When do Ozempic patents expire?', <em>Pharmaceutical Journal</em>, 315(1), pp. 18–22.</li>
+      <li>Marie Claire UK (2026) 'The two-tier weight loss divide', <em>Marie Claire UK</em>, 8 February.</li>
+      <li>Marsh, S. (2025) 'Fake weight-loss jabs: the dangerous black market in counterfeit Ozempic', <em>The Guardian</em>, 3 November.</li>
+      <li>MHRA (2024) <em>GLP-1 receptor agonists: updated guidance on monitoring and risk management</em>.</li>
+      <li>Nesta (2026) <em>Beyond the jab: obesity, environment and the limits of pharmaceutical solutions</em>.</li>
+      <li>NHS Digital (2023) <em>Health Survey for England 2022: adult overweight and obesity</em>.</li>
+      <li>NICE (2023) <em>Obesity: identification, assessment and management. CG189</em>.</li>
+      <li>Nutbeam, D. (2000) 'Health literacy as a public health goal', <em>Health Promotion International</em>, 15(3), pp. 259–267.</li>
+      <li>Parmar, A. (2026) 'Eli Lilly raises Mounjaro private prescription price', <em>Chemist + Druggist</em>, 15 January.</li>
+      <li>Reuters (2026) 'Counterfeit Ozempic seizures double in Europe', <em>Reuters</em>, 27 February.</li>
+      <li>Wilding, J.P.H. et al. (2021) 'Once-weekly semaglutide in adults with overweight or obesity', <em>NEJM</em>, 384(11), pp. 989–1002.</li>
+      <li>Wilding, J.P.H. et al. (2022) 'Weight regain after withdrawal of semaglutide: STEP 1 trial extension', <em>Diabetes, Obesity and Metabolism</em>, 24(8), pp. 1553–1564.</li>
+      <li>World Health Organization (2025) <em>Infodemics and health communication: a framework for action</em>. Geneva: WHO.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ──────── FOOTER ──────── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <h4>The Ozempic <em>Era</em></h4>
+    <p>An open-access educational resource · POPH65092 Business, Media & Health · University of Manchester · 2025–26</p>
+  </div>
+</footer>
+
+<script>
+// ─── Tab active state on scroll ───
+const sections = document.querySelectorAll('.section');
+const tabs = document.querySelectorAll('.tab');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // fade-in
+      entry.target.classList.add('visible');
+      // active tab
+      const id = entry.target.id;
+      tabs.forEach(t => t.classList.toggle('active', t.dataset.section === id));
+    }
+  });
+}, { rootMargin: '-30% 0px -50% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// ensure smooth click navigation also updates active state
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
