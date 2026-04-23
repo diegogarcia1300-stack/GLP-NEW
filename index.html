@@ -312,6 +312,35 @@ em{font-style:italic}
 #conclusion .stat{border-left-color:var(--conclusion)}
 #conclusion .stat-num{color:var(--conclusion)}
 
+/* ─── FIGURE / IMAGE ─── */
+.figure{
+  margin:36px 0;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:2px;
+  padding:20px 20px 16px;
+  position:relative;z-index:2;
+}
+.figure img{
+  display:block;
+  max-width:100%;
+  height:auto;
+  border-radius:1px;
+}
+.figure figcaption{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--muted);
+  font-style:italic;
+  line-height:1.55;
+}
+.figure figcaption strong{
+  font-style:normal;
+  color:var(--ink-2);
+  font-weight:600;
+}
+#health .figure{border-left:4px solid var(--health)}
+
 /* key questions box */
 .questions{
   background:var(--paper);
@@ -416,6 +445,7 @@ em{font-style:italic}
   .stat-num{font-size:42px}
   .lead::first-letter{font-size:54px}
   .questions{padding:24px}
+  .figure{padding:14px 14px 12px}
 }
 </style>
 </head>
@@ -605,12 +635,23 @@ em{font-style:italic}
   <p>GLP-1 (glucagon-like peptide-1) receptor agonists mimic the action of a naturally occurring gut hormone that is released after eating. By binding to GLP-1 receptors in the pancreas, brain and gastrointestinal tract, these drugs stimulate insulin secretion, suppress glucagon, slow gastric emptying and signal satiety to the hypothalamus <span class="cite">(Drucker, 2018)</span>. The cumulative effect is a reduction in appetite and caloric intake that is physiologically mediated — not simply a matter of willpower.</p>
 
   <h3>What the Trials Actually Show — and Who They Involve</h3>
-  <p>The clinical evidence base for GLP-1 drugs is genuinely impressive within its intended population. The STEP 1 trial randomised adults with a BMI of 30 or above (or BMI 27 with at least one weight-related comorbidity) to receive either semaglutide or placebo over 68 weeks.</p>
+  <p>The clinical evidence base for GLP-1 drugs is genuinely impressive within its intended population. The STEP 1 trial randomised adults with a BMI of 30 or above (or BMI 27 with at least one weight-related comorbidity) to receive either semaglutide or placebo over 68 weeks. As shown in Figure 1 below, the differences in weight loss outcomes between groups were striking.</p>
 
   <div class="stat">
     <div class="stat-num">14.9%</div>
     <div class="stat-text">Average body weight loss in semaglutide-treated adults over 68 weeks, vs. 2.4% in the placebo group (Wilding et al., 2021). Tirzepatide trials report reductions of up to 20% (Jastreboff et al., 2022).</div>
   </div>
+
+  <!-- ── FIGURE 1 ── -->
+  <figure class="figure">
+    <img
+      src="figure1_glp1_weight_loss.png"
+      alt="Bar chart titled 'Weight Loss Outcomes in GLP-1 Clinical Trials' showing average percentage body weight loss on the y-axis. Three bars: Placebo at approximately 2.4%, Semaglutide STEP-1 at approximately 14.9%, and Tirzepatide SURMOUNT-1 at approximately 21%."
+    >
+    <figcaption>
+      <strong>Figure 1.</strong> Average percentage body weight loss observed in GLP-1 clinical trials, comparing placebo, semaglutide and tirzepatide. All trial participants had a BMI of 30 or above, or 27 and above with at least one obesity-related comorbidity — a clinically defined population with clear medical need. Semaglutide data from the STEP 1 trial <span class="cite">(Wilding et al., 2021)</span>; tirzepatide data from the SURMOUNT-1 trial <span class="cite">(Jastreboff et al., 2022)</span>.
+    </figcaption>
+  </figure>
 
   <p>However, there is a critical dimension to these results that mainstream coverage consistently underplays: <strong>these trials enrolled people with clear medical need.</strong> Trial participants had BMIs placing them in the obese range, often alongside comorbidities such as hypertension or prediabetes. They were monitored by clinical teams, supported with lifestyle counselling, and screened for contraindications.</p>
 
